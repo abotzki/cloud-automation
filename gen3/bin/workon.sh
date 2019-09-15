@@ -117,7 +117,7 @@ if [[ ! -f "$bucketCheckFlag" && "$GEN3_FLAVOR" == "AWS" ]]; then
   }
 EOM
 )
-    gen3_aws_run aws s3api create-bucket --acl private --bucket "$GEN3_S3_BUCKET"
+    gen3_aws_run aws s3api create-bucket --acl private --bucket "$GEN3_S3_BUCKET" --create-bucket-configuration LocationConstraint="$AWS_DEFAULT_REGION"
     sleep 5 # Avoid race conditions
     if gen3_aws_run aws s3api put-bucket-encryption --bucket "$GEN3_S3_BUCKET" --server-side-encryption-configuration "$S3_POLICY"; then
       touch "$bucketCheckFlag"
